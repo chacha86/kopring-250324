@@ -10,7 +10,6 @@ data class PostListParamDto(
     val published: Boolean?,
     val page: Int?,
     val pageSize: Int?
-
 ) {
     fun getPage(): Int {
         return page ?: 0
