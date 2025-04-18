@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { components } from "@/lib/backend/apiV1/schema";
+
 import { client } from "@/lib/backend/client";
 import { Download } from "lucide-react";
 import Image from "next/image";

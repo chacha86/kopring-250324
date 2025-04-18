@@ -1,6 +1,4 @@
 "use client";
-
-import { components } from "@/lib/backend/apiV1/schema";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -36,6 +34,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { components } from "@/lib/backend/apiV1/schema";
 import { Search } from "lucide-react";
 import { useState } from "react";
 
@@ -192,8 +191,6 @@ function SearchDialog({
             e.preventDefault();
 
             const formData = new FormData(e.target as HTMLFormElement);
-            const searchKeyword = formData.get("keyword") as string;
-            const searchKeywordType = formData.get("keywordType") as string;
             const page = 1;
             const pageSize = formData.get("pageSize") as string;
 

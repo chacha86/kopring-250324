@@ -1,13 +1,13 @@
+import ErrorPage from "@/components/business/ErrorPage";
 import { client } from "@/lib/backend/client";
+import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import ClientPage from "./ClientPage";
 
 export default async function Page({
   params,
 }: {
-  params: {
-    id: number;
-  };
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
   const res = await fetchPost(id);
@@ -41,21 +41,14 @@ export default async function Page({
   return <ClientPage post={post} postGenFiles={postGenFiles} />;
 }
 
-import ErrorPage from "@/components/business/ErrorPage";
-import type { Metadata, ResolvingMetadata } from "next";
-
-type Props = {
+export async function generateMetadata({
+  params,
+}: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-};
-
-export async function generateMetadata(
-  { params, searchParams }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+}): Promise<Metadata> {
   const { id } = await params;
 
-  const res = await fetchPost(Number(id));
+  const res = await fetchPost(id);
 
   if (res.error) {
     return {
@@ -72,11 +65,11 @@ export async function generateMetadata(
   };
 }
 
-async function fetchPost(id: number) {
+async function fetchPost(id: string) {
   const response = await client.GET("/api/v1/posts/{id}", {
     params: {
       path: {
-        id,
+        id: parseInt(id),
       },
     },
     headers: {
